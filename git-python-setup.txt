@@ -24,10 +24,19 @@ GitHub 仓库：https://github.com/meilaesop/student-web.git
    Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
    node --version
    npm --version
-6. 不要修改、删除或覆盖项目中的 index.html、style.css、script.js。
-7. 如果当前项目没有 .git 目录，在项目目录执行 git init，但不要自动提交文件。
-8. 修改 PATH 后重新加载 VS Code 窗口。
-9. 最后验证：
+6. 配置 Continue 和 DeepSeek：
+   在 VS Code 扩展市场安装发布者为 Continue 的 Continue 扩展。
+   DeepSeek 开放平台：https://platform.deepseek.com/
+   DeepSeek API Keys：https://platform.deepseek.com/api_keys
+   打开网页后扫码登录，进入 API Keys 页面，创建并复制 API Key。
+   打开 Continue，添加 Chat model，Provider 选择 DeepSeek。
+   Model 选择 DeepSeek Chat 或 deepseek-chat。
+   输入 DeepSeek API Key 后点击 Connect。
+   API Key 不要写入项目文件，也不要提交到 GitHub。
+7. 不要修改、删除或覆盖项目中的 index.html、style.css、script.js。
+8. 如果当前项目没有 .git 目录，在项目目录执行 git init，但不要自动提交文件。
+9. 修改 PATH 后重新加载 VS Code 窗口。
+10. 最后验证：
    git --version
    python --version
    python -m pip --version
