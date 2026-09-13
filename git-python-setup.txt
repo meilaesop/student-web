@@ -5,6 +5,11 @@ Git 可执行文件：D:\Git\cmd\git.exe
 Python 安装目录：D:\Python
 Python 可执行文件：D:\Python\python.exe
 当前项目：D:\Microsoft VS Code\student-web
+Node.js 安装目录：D:\nodejs
+Node.js 版本：v24.21.0
+GitHub 用户名：meilaesop
+Git 提交邮箱：meilaesop@gmail.com
+GitHub 仓库：https://github.com/meilaesop/student-web.git
 
 请按以下要求操作：
 1. 先检查 Git 和 Python 的实际可执行文件，以及当前 Windows 用户 PATH。
@@ -12,13 +17,25 @@ Python 可执行文件：D:\Python\python.exe
 3. 在 VS Code 用户设置中指定：
    "git.path": "D:\\Git\\cmd\\git.exe"
    Python 解释器：D:\Python\python.exe
-4. 不要修改、删除或覆盖项目中的 index.html、style.css、script.js。
-5. 如果当前项目没有 .git 目录，在项目目录执行 git init，但不要自动提交文件。
-6. 修改 PATH 后重新加载 VS Code 窗口。
-7. 最后验证：
+4. 配置 Git 提交身份：
+   git config --global user.name "meilaesop"
+   git config --global user.email "meilaesop@gmail.com"
+5. 配置 Node.js 和 npm：
+   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+   node --version
+   npm --version
+6. 不要修改、删除或覆盖项目中的 index.html、style.css、script.js。
+7. 如果当前项目没有 .git 目录，在项目目录执行 git init，但不要自动提交文件。
+8. 修改 PATH 后重新加载 VS Code 窗口。
+9. 最后验证：
    git --version
    python --version
    python -m pip --version
+   node --version
+   npm --version
+   node --check "D:\Microsoft VS Code\student-web\script.js"
+   git config --global user.name
+   git config --global user.email
    git -C "D:\Microsoft VS Code\student-web" status
 
 只有所有验证成功后，才说明配置完成，并告知实际验证结果。
