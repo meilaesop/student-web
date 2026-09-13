@@ -1,0 +1,174 @@
+:root {
+    color-scheme: light;
+    --ink: #17211f;
+    --muted: #5d6b67;
+    --paper: #f6f3ec;
+    --panel: #fffdf8;
+    --green: #1f6f5b;
+    --yellow: #f2c14e;
+    --coral: #e87961;
+    --line: #d9dfd7;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+body::before {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    content: "";
+    opacity: 0.45;
+    background-image: radial-gradient(#b8c7bd 0.8px, transparent 0.8px);
+    background-size: 18px 18px;
+}
+
+.page-shell {
+    width: min(1080px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 64px 0 32px;
+}
+
+.hero {
+    max-width: 720px;
+    padding: 48px;
+    border-left: 8px solid var(--green);
+    background: var(--panel);
+    box-shadow: 12px 12px 0 #dce6dd;
+}
+
+.eyebrow {
+    margin: 0 0 18px;
+    color: var(--green);
+    font: 700 0.78rem/1.4 Arial, sans-serif;
+    letter-spacing: 0.12em;
+}
+
+h1,
+h2,
+p {
+    margin-top: 0;
+}
+
+h1 {
+    max-width: 620px;
+    margin-bottom: 18px;
+    font-size: clamp(2.8rem, 7vw, 5.8rem);
+    line-height: 0.95;
+    letter-spacing: 0;
+}
+
+.intro {
+    max-width: 580px;
+    color: var(--muted);
+    font-size: 1.15rem;
+    line-height: 1.7;
+}
+
+.check-in-button {
+    padding: 14px 20px;
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    color: var(--ink);
+    background: var(--yellow);
+    cursor: pointer;
+    font: 700 0.95rem Arial, sans-serif;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.check-in-button:hover,
+.check-in-button:focus-visible {
+    transform: translate(-3px, -3px);
+    box-shadow: 5px 5px 0 var(--ink);
+}
+
+.check-in-button:focus-visible {
+    outline: 3px solid var(--coral);
+    outline-offset: 3px;
+}
+
+.status {
+    min-height: 24px;
+    margin: 18px 0 0;
+    color: var(--green);
+    font-weight: 700;
+}
+
+.lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 58px;
+}
+
+.lesson-card {
+    min-height: 220px;
+    padding: 26px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+}
+
+.html-card {
+    border-top: 8px solid var(--coral);
+}
+
+.css-card {
+    border-top: 8px solid var(--yellow);
+}
+
+.js-card {
+    border-top: 8px solid var(--green);
+}
+
+.card-number {
+    display: block;
+    margin-bottom: 36px;
+    color: var(--muted);
+    font: 700 0.8rem Arial, sans-serif;
+}
+
+.lesson-card h2 {
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.lesson-card p {
+    margin-bottom: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.footer-note {
+    margin-top: 38px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 760px) {
+    .page-shell {
+        width: min(100% - 28px, 600px);
+        padding-top: 28px;
+    }
+
+    .hero {
+        padding: 30px 24px;
+    }
+
+    .lesson-grid {
+        grid-template-columns: 1fr;
+        margin-top: 42px;
+    }
+
+    .lesson-card {
+        min-height: auto;
+    }
+}

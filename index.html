@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web 学习打卡</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="page-shell">
+        <section class="hero">
+            <p class="eyebrow">DAY 01 · HTML CSS JAVASCRIPT</p>
+            <h1>我的 Web 学习空间</h1>
+            <p class="intro">今天先认识网页的三位搭档：HTML 搭骨架，CSS 做外观，JavaScript 让页面动起来。</p>
+            <button id="checkInButton" class="check-in-button" type="button">完成今天的学习</button>
+            <p id="statusText" class="status" aria-live="polite">今天还没有打卡</p>
+        </section>
+
+        <section class="lesson-grid" aria-label="今日学习内容">
+            <article class="lesson-card html-card">
+                <span class="card-number">01</span>
+                <h2>HTML</h2>
+                <p>用标签描述标题、段落、按钮和页面结构。</p>
+            </article>
+            <article class="lesson-card css-card">
+                <span class="card-number">02</span>
+                <h2>CSS</h2>
+                <p>用选择器和属性控制颜色、间距、大小与布局。</p>
+            </article>
+            <article class="lesson-card js-card">
+                <span class="card-number">03</span>
+                <h2>JavaScript</h2>
+                <p>监听用户操作，修改页面内容，让网页产生反馈。</p>
+            </article>
+        </section>
+
+        <footer class="footer-note">小步完成，持续积累。今天的第一步已经开始。</footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
