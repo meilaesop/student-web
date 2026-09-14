@@ -1,66 +1,127 @@
 项目配置说明（已完成版）
 
-基础信息
+一、项目概览
+- 当前项目：D:\Microsoft VS Code\student-web
+- GitHub 仓库：https://github.com/meilaesop/student-web.git
+- 目标：在本地完成前端学习环境配置，并确保项目可以正常运行与提交。
+
+二、基础信息
 - Git 安装目录：D:\Git
 - Git 可执行文件：D:\Git\cmd\git.exe
 - Python 安装目录：D:\Python
 - Python 可执行文件：D:\Python\python.exe
-- 当前项目：D:\Microsoft VS Code\student-web
 - Node.js 安装目录：D:\nodejs
 - Node.js 版本：v24.21.0
 - GitHub 用户名：meilaesop
 - Git 提交邮箱：meilaesop@gmail.com
-- GitHub 仓库：https://github.com/meilaesop/student-web.git
 
-执行步骤
-1. 检查 Git、Python、Node.js 和当前 Windows 用户 PATH。
-2. 将以下路径加入 Windows 用户 PATH：
-   - D:\Git\cmd
-   - D:\Python
-   - D:\Python\Scripts
-   - D:\nodejs
-   规则：使用分号分隔，避免重复、空项或黏连。
-3. 在 VS Code 用户设置中配置：
-   - "git.path": "D:\\Git\\cmd\\git.exe"
-   - Python 解释器：D:\Python\python.exe
-4. 配置 Git 全局身份：
-   git config --global user.name "meilaesop"
-   git config --global user.email "meilaesop@gmail.com"
-5. 配置 Node.js 和 npm：
-   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
-   node --version
-   npm --version
-6. 配置 Continue 和 DeepSeek：
-   - 在 VS Code 扩展市场安装 Continue 扩展。
-   - 打开 https://platform.deepseek.com/ 和 https://platform.deepseek.com/api_keys
-   - 扫码登录并创建 API Key。
-   - 在 Continue 中添加 Chat model。
-   - Provider 选择 DeepSeek。
-   - Model 选择 DeepSeek Chat 或 deepseek-chat。
-   - 输入 API Key，点击 Connect。
-   - API Key 不要写入项目文件，也不要提交到 GitHub。
-7. 不要修改、删除或覆盖项目中的以下文件：
-   - index.html
-   - style.css
-   - script.js
-8. 如果当前项目没有 .git 目录，执行：
-   git init
-   但不要自动提交文件。
-9. 修改 PATH 后重新加载 VS Code 窗口。
-10. 最终验证：
-   git --version
-   python --version
-   python -m pip --version
-   node --version
-   npm --version
-   node --check "D:\Microsoft VS Code\student-web\script.js"
-   git config --global user.name
-   git config --global user.email
-   git -C "D:\Microsoft VS Code\student-web" status
+三、执行步骤
 
-完成标准
+1. 检查本机环境
+在 PowerShell 中依次执行：
+- git --version
+- python --version
+- python -m pip --version
+- node --version
+- npm --version
+- where git
+- where python
+- where node
+- where npm
+
+如果命令无法识别，说明环境变量未配置成功，先继续完成下一步。
+
+2. 配置 Windows 用户 PATH
+将以下路径加入“用户环境变量 PATH”中，使用分号分隔，避免重复、空项或黏连：
+- D:\Git\cmd
+- D:\Python
+- D:\Python\Scripts
+- D:\nodejs
+
+建议检查 PATH 中是否已经存在这些目录，避免重复添加。
+
+3. 配置 VS Code 相关设置
+在 VS Code 用户设置中配置：
+- "git.path": "D:\\Git\\cmd\\git.exe"
+- Python 解释器：D:\Python\python.exe
+
+4. 配置 Git 全局身份
+执行：
+- git config --global user.name "meilaesop"
+- git config --global user.email "meilaesop@gmail.com"
+
+5. 配置 Node.js 和 npm
+执行：
+- Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+- node --version
+- npm --version
+
+6. 初始化项目 Git 仓库（如当前项目没有 .git 目录）
+如果在项目目录中没有 .git 目录，执行：
+- git init
+
+注意：不要在当前阶段自动提交文件；先保证环境与配置正确。
+
+7. 配置 Continue 与 DeepSeek
+- 在 VS Code 扩展市场安装 Continue 扩展。
+- 打开 https://platform.deepseek.com/ 和 https://platform.deepseek.com/api_keys
+- 扫码登录并创建 API Key。
+- 在 Continue 中添加 Chat model。
+- Provider 选择 DeepSeek。
+- Model 选择 DeepSeek Chat 或 deepseek-chat。
+- 输入 API Key，点击 Connect。
+
+安全要求：
+- API Key 不要写入项目文件；
+- 不要提交到 GitHub；
+- 不要放进 README 或任何代码文件中。
+
+8. 重新加载 VS Code
+修改 PATH 后，重新加载 VS Code 窗口，确保新环境变量生效。
+
+四、项目文件保护规则
+不要修改、删除或覆盖项目中的以下文件：
+- index.html
+- style.css
+- script.js
+
+如果需要扩展功能，建议在不改动这些核心文件的前提下新增新文件，而不是直接覆盖原文件。
+
+五、最终验证
+在配置完成后，逐项执行：
+- git --version
+- python --version
+- python -m pip --version
+- node --version
+- npm --version
+- node --check "D:\Microsoft VS Code\student-web\script.js"
+- git config --global user.name
+- git config --global user.email
+- git -C "D:\Microsoft VS Code\student-web" status
+
+六、常见问题排查
+如果命令报错，优先检查：
+- PATH 中是否包含 D:\Git\cmd、D:\Python、D:\Python\Scripts、D:\nodejs
+- 是否需要重开终端或重载 VS Code
+- 是否用的是当前用户级环境变量，而不是系统级变量
+- 是否有重复路径导致命令冲突
+
+可以用以下命令快速排查：
+- where git
+- where python
+- where node
+- where npm
+
+七、完成标准
+以下条件都满足时，才可认为配置完成：
 - 所有命令都成功运行；
 - 路径和版本均正确；
 - Git 身份已配置；
+- Node.js 与 npm 正常可用；
+- JavaScript 语法检查无报错；
 - DeepSeek 已成功连接；
 - 仅在此时才说明配置完成，并告知实际验证结果。
+
+八、执行总结
+从“环境安装 → PATH 配置 → Git 配置 → Node 配置 → DeepSeek 连接 → 最终验证”这个顺序执行最稳妥。
+这能减少因环境变量、解释器位置或权限问题导致的异常，并保证项目能持续开发与维护。
