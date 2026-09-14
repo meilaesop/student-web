@@ -11,29 +11,36 @@
 <body>
     <main class="page-shell">
         <section class="hero">
-            <p class="eyebrow">DAY 01 · HTML CSS JAVASCRIPT</p>
+            <p class="eyebrow">DAY 02 · HTML CSS JAVASCRIPT</p>
             <h1>我的 Web 学习空间</h1>
-            <p class="intro">今天先认识网页的三位搭档：HTML 搭骨架，CSS 做外观，JavaScript 让页面动起来。</p>
+            <p class="intro">今天让网页真正"活"起来：用数据驱动页面、切换主题、保存学习笔记。</p>
+            <div class="hero-actions">
             <button id="checkInButton" class="check-in-button" type="button">完成今天的学习</button>
+                <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false">切换到深色模式</button>
+            </div>
             <p id="statusText" class="status" aria-live="polite">今天还没有打卡</p>
         </section>
 
-        <section class="lesson-grid" aria-label="今日学习内容">
-            <article class="lesson-card html-card">
-                <span class="card-number">01</span>
-                <h2>HTML</h2>
-                <p>用标签描述标题、段落、按钮和页面结构。</p>
-            </article>
-            <article class="lesson-card css-card">
-                <span class="card-number">02</span>
-                <h2>CSS</h2>
-                <p>用选择器和属性控制颜色、间距、大小与布局。</p>
-            </article>
-            <article class="lesson-card js-card">
-                <span class="card-number">03</span>
-                <h2>JavaScript</h2>
-                <p>监听用户操作，修改页面内容，让网页产生反馈。</p>
-            </article>
+        <section class="lesson-grid" id="lessonGrid" aria-label="今日学习内容">
+            <!-- 卡片由 script.js 根据数据动态生成 -->
+        </section>
+
+        <section class="study-plan" aria-labelledby="study-plan-title">
+            <header>
+                <p class="eyebrow">HTML PRACTICE</p>
+                <h2 id="study-plan-title">今天的学习计划</h2>
+            </header>
+            <ul class="plan-list">
+                <li><strong>认识结构：</strong>使用 section 组织页面内容。</li>
+                <li><strong>练习列表：</strong>使用 ul 和 li 表示学习任务。</li>
+                <li><strong>保持语义：</strong>让标签名称表达内容作用。</li>
+            </ul>
+            <form class="study-form" id="studyForm">
+                <label for="studyNote">今天学到什么？</label>
+                <input id="studyNote" name="studyNote" type="text" placeholder="写下一句话学习笔记" autocomplete="off">
+                <button type="submit">保存笔记</button>
+            </form>
+            <ul class="note-list" id="noteList" aria-live="polite"></ul>
         </section>
 
         <footer class="footer-note">小步完成，持续积累。今天的第一步已经开始。</footer>
