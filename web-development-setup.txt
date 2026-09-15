@@ -187,3 +187,39 @@
 八、执行总结
 从“环境安装 → PATH 配置 → Git 配置 → Node 配置 → DeepSeek 连接 → 最终验证”这个顺序执行最稳妥。
 这能减少因环境变量、解释器位置或权限问题导致的异常，并保证项目能持续开发与维护。
+
+九、访问 GitHub 的网络配置（本地代理）
+
+【现象】
+git push / clone 报错：
+  fatal: unable to access 'https://github.com/...': Recv failure: Connection was reset
+即：Git 直连 GitHub 被重置，属于网络问题（本地提交 commit 不受影响，只有联网操作 push/pull/clone 会失败）。
+
+【方案】
+让 Git 走本地 Clash 代理的“混合端口（Mixed Port）”，本机为 7897。
+
+【开启代理】
+  git config --global http.proxy  http://127.0.0.1:7897
+  git config --global https.proxy http://127.0.0.1:7897
+
+【关闭代理】
+  git config --global --unset http.proxy
+  git config --global --unset https.proxy
+
+【查看当前代理设置】
+  git config --global --get http.proxy
+  git config --global --get https.proxy
+
+【只对 GitHub 走代理（可选，更精细）】
+  git config --global http.https://github.com.proxy http://127.0.0.1:7897
+
+【前提与注意】
+- Clash 必须保持运行；若关闭 Clash，走代理的 git 反而会连接失败。
+- 端口以 Clash 客户端“设置 → 端口”里的 Mixed Port 为准（本机为 7897）。
+- 端口由 Clash 配置写死，正常开机/重启不会变；换配置、换订阅或手动改端口时才会变，
+  此时只需把上面的 7897 换成新端口重新设置一次。
+- 本机实测：配置该代理后，git push 成功（d7fd009..6b02acb  master -> master）。
+
+【验证代理端口是否可用】
+  Test-NetConnection -ComputerName 127.0.0.1 -Port 7897 -InformationLevel Quiet
+  （返回 True 表示端口在监听，即 Clash 正在运行）
