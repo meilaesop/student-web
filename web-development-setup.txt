@@ -1,16 +1,19 @@
 ﻿项目配置说明（精简版）
 
+
 一、项目概览
 - 项目：D:\Microsoft VS Code\student-web
 - GitHub 仓库：https://github.com/meilaesop/student-web.git
 - 目标：本地完成前端学习环境配置，确保项目可正常运行与提交。
 
-二、基础信息
+
+二、基础信息（版本号以实际输出为准，仅供参考）
 - Git：D:\Git\cmd\git.exe，版本 2.55.0.windows.5
-- Python：D:\Python\python.exe
+- Python：D:\Python\python.exe，版本 3.13.15
 - Node.js：D:\nodejs，版本 v24.21.0
 - GitHub 用户名：meilaesop
 - 提交邮箱：meilaesop@gmail.com
+
 
 三、环境自检
 在 PowerShell 中依次执行：
@@ -20,23 +23,39 @@
 - node --version
 - npm --version
 
-若报错"无法将 xxx 项识别为 cmdlet"，重启 VS Code 即可（绝大多数是终端会话过期，PATH 已配置正确，无需重配）。
+排错顺序：
+1) 报错"无法将 xxx 项识别为 cmdlet" → 先重启 VS Code（多数是终端会话过期）。
+2) 重启后仍报错 → 用 where.exe 定位：
+     where.exe git
+     where.exe python
+     where.exe node
+   若 where 找不到 → 执行第四节配置 PATH。
+3) 特例：若 python --version 无任何输出，或 where.exe python 第一条指向
+   C:\Users\<用户>\AppData\Local\Microsoft\WindowsApps\python.exe（0 字节占位符），
+   说明命中了 Windows"应用执行别名"。
+   处理（二选一，推荐 a）：
+   a) 设置 → 应用 → 高级应用设置 → 应用执行别名，关闭 python.exe / python3.exe；
+   b) 将 D:\Python 在 PATH 中前置（见第四节修正脚本）。
 
-四、PATH 配置（仅重启 VS Code 后仍报错时才需要，用方案 B）
-用命令行写入当前用户级变量，避免动到系统级变量：
-  $paths = "D:\Git\cmd","D:\Python","D:\Python\Scripts","D:\nodejs"
+
+四、PATH 配置（仅重启后 where 仍找不到时才需要 · 修正版）
+写入用户级变量，避免动系统级；且把 D:\Python 前置以避开 WindowsApps 占位符：
+  $paths = "D:\Python","D:\Python\Scripts","D:\Git\cmd","D:\nodejs"
   $cur = [Environment]::GetEnvironmentVariable("Path","User")
-  $list = $cur.Split(';') | Where-Object { $_ -ne '' }
-  foreach ($p in $paths) {
-      if ($list -notcontains $p) { $list += $p }
-  }
-  [Environment]::SetEnvironmentVariable("Path", ($list -join ';'), "User")
-执行后重启 VS Code，用 where git 验证（应输出 D:\Git\cmd\git.exe）。
+  $cur = if ($null -eq $cur) { "" } else { $cur }
+  $list = @($cur.Split(';') | Where-Object { $_ -ne '' -and ($paths -notcontains $_) })
+  $new  = (@($paths) + $list) -join ';'
+  [Environment]::SetEnvironmentVariable("Path", $new, "User")
+执行后重启 VS Code，用以下命令验证（关键看第一条命中）：
+  where.exe git      # 期望 D:\Git\cmd\git.exe
+  where.exe python   # 期望 D:\Python\python.exe（不能是 WindowsApps）
+
 
 五、Git 全局身份
 执行：
 - git config --global user.name "meilaesop"
 - git config --global user.email "meilaesop@gmail.com"
+
 
 六、Node.js 与 npm
 执行：
@@ -44,28 +63,46 @@
 - node --version
 - npm --version
 
+
 七、项目 Git 仓库
-若项目目录无 .git，执行：
+先检查是否已是仓库（本项目应已存在）：
+- Test-Path .git
+若为 False 才执行：
 - git init
 当前阶段不要自动提交。
 
-八、Continue 与 DeepSeek
+
+八、Continue 与 DeepSeek（手动配置 · 已完成）
 - 在 VS Code 扩展市场安装 Continue 扩展。
 - 到 https://platform.deepseek.com/api_keys 创建 API Key。
 - Continue 中添加 Chat model，Provider 选 DeepSeek，Model 选 deepseek-chat，填入 Key 并 Connect。
 - 安全要求：API Key 不写入项目文件、README 或任何代码文件，不提交到 GitHub。
+- 说明：本步骤无法自动化，需手动完成；目前已全部连接完成。
 
-九、最终验证
-逐项执行：
+
+九、最终验证（一键自检，可整段复制运行）
+$env:Path = [Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [Environment]::GetEnvironmentVariable("Path","User")
+Write-Host "git   :" (git --version)
+Write-Host "python:" (python --version)
+Write-Host "pip   :" (python -m pip --version)
+Write-Host "node  :" (node --version)
+Write-Host "npm   :" (npm --version)
+node --check "script.js"; Write-Host "syntax:" ($(if ($LASTEXITCODE -eq 0) { 'OK' } else { 'FAIL' }))
+Write-Host "name  :" (git config --global user.name)
+Write-Host "email :" (git config --global user.email)
+git status
+
+（等价逐项清单）
 - git --version
 - python --version
 - python -m pip --version
 - node --version
 - npm --version
-- node --check "D:\Microsoft VS Code\student-web\script.js"
+- node --check script.js
 - git config --global user.name
 - git config --global user.email
-- git -C "D:\Microsoft VS Code\student-web" status
+- git status
+
 
 十、完成标准
 以下都满足即配置完成：
@@ -73,5 +110,6 @@
 - Git 身份已配置；
 - Node.js 与 npm 正常；
 - JavaScript 语法检查无报错；
-- DeepSeek 已连接。
+- DeepSeek 已连接（见第八节）。
+
 
