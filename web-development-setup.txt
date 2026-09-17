@@ -1,67 +1,29 @@
-项目配置说明（已完成版）
+﻿项目配置说明（精简版）
 
 一、项目概览
-- 当前项目：D:\Microsoft VS Code\student-web
+- 项目：D:\Microsoft VS Code\student-web
 - GitHub 仓库：https://github.com/meilaesop/student-web.git
-- 目标：在本地完成前端学习环境配置，并确保项目可以正常运行与提交。
+- 目标：本地完成前端学习环境配置，确保项目可正常运行与提交。
 
 二、基础信息
-- Git 安装目录：D:\Git
-- Git 可执行文件：D:\Git\cmd\git.exe
-- Python 安装目录：D:\Python
-- Python 可执行文件：D:\Python\python.exe
-- Node.js 安装目录：D:\nodejs
-- Node.js 版本：v24.21.0
+- Git：D:\Git\cmd\git.exe，版本 2.55.0.windows.5
+- Python：D:\Python\python.exe
+- Node.js：D:\nodejs，版本 v24.21.0
 - GitHub 用户名：meilaesop
-- Git 提交邮箱：meilaesop@gmail.com
+- 提交邮箱：meilaesop@gmail.com
 
-三、执行步骤
-
-1. 检查本机环境
+三、环境自检
 在 PowerShell 中依次执行：
 - git --version
 - python --version
 - python -m pip --version
 - node --version
 - npm --version
-- where git
-- where python
-- where node
-- where npm
 
-如果命令无法识别，说明环境变量未配置成功，先继续完成下一步。
+若报错"无法将 xxx 项识别为 cmdlet"，重启 VS Code 即可（绝大多数是终端会话过期，PATH 已配置正确，无需重配）。
 
-2. 配置 Windows 用户 PATH（详细步骤）
-
-【先判断：是真没配，还是只是没生效？】
-命令行敲 git / python / node 时，Windows 会去“用户环境变量 PATH”里逐目录查找对应的 .exe。
-报错“无法将 git 项识别为 cmdlet…”有两种可能：
-  (a) PATH 里确实没有 D:\Git\cmd —— 需要添加（见下方）。
-  (b) PATH 里已有，但当前终端是“更新之前”打开的旧会话 —— 只需重开终端。
-先重开一个全新终端再试；仍不行才按下面步骤添加。
-用完整路径判断 Git 是否本身没问题：
-  & "D:\Git\cmd\git.exe" --version
-
-【需要加入 PATH 的目录】
-- D:\Git\cmd
-- D:\Python
-- D:\Python\Scripts
-- D:\nodejs
-
-【方法 A：图形界面（推荐初学者，最稳）】
-1. 按 Win 键，搜索“环境变量”，打开“编辑账户的环境变量”。
-2. 在弹出的“环境变量”窗口上半部分（用户变量）中，选中 “Path”，点“编辑”。
-3. 在“编辑环境变量”窗口里点“新建”，逐条加入下面 4 条（一条一个框）：
-   - D:\Git\cmd
-   - D:\Python
-   - D:\Python\Scripts
-   - D:\nodejs
-4. 如列表里已存在相同路径，就不要重复添加（避免重复路径导致命令冲突）。
-5. 一路点“确定”保存，不要点“取消”。
-6. 关闭所有已打开的终端窗口，重新打开（或重载 VS Code），让新 PATH 生效。
-
-【方法 B：PowerShell 命令行（进阶，一次执行）】
-用当前用户级变量写入，避免动到系统级变量：
+四、PATH 配置（仅重启 VS Code 后仍报错时才需要，用方案 B）
+用命令行写入当前用户级变量，避免动到系统级变量：
   $paths = "D:\Git\cmd","D:\Python","D:\Python\Scripts","D:\nodejs"
   $cur = [Environment]::GetEnvironmentVariable("Path","User")
   $list = $cur.Split(';') | Where-Object { $_ -ne '' }
@@ -69,70 +31,39 @@
       if ($list -notcontains $p) { $list += $p }
   }
   [Environment]::SetEnvironmentVariable("Path", ($list -join ';'), "User")
-执行后重开终端，再用 where git 验证。
+执行后重启 VS Code，用 where git 验证（应输出 D:\Git\cmd\git.exe）。
 
-【验证是否生效】
-重新打开终端后执行：
-- where git      （应输出 D:\Git\cmd\git.exe）
-- git --version  （应输出版本号，如 git version 2.55.0.windows.5）
-
-【本机实测记录（重要）】
-- Git 已安装：D:\Git\cmd\git.exe，版本 2.55.0.windows.5
-- 用户变量 Path 中已包含：C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps; D:\Git\cmd; D:\Python; D:\Python\Scripts; D:\nodejs
-- 用完整路径 & "D:\Git\cmd\git.exe" --version 可正常运行
-- 结论：PATH 本身已配置正确。之前 git 命令报错，是“终端会话过期”导致，
-  即终端在 PATH 写入之前就已打开，没读到新值。重开终端后 git --version 正常。
-- 因此：正常情况下无需再改 PATH，先重开终端 / 重载 VS Code 即可。
-
-3. 配置 VS Code 相关设置
-在 VS Code 用户设置中配置：
-- "git.path": "D:\\Git\\cmd\\git.exe"
-- Python 解释器：D:\Python\python.exe
-
-4. 配置 Git 全局身份
+五、Git 全局身份
 执行：
 - git config --global user.name "meilaesop"
 - git config --global user.email "meilaesop@gmail.com"
 
-5. 配置 Node.js 和 npm
+六、Node.js 与 npm
 执行：
 - Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
 - node --version
 - npm --version
 
-6. 初始化项目 Git 仓库（如当前项目没有 .git 目录）
-如果在项目目录中没有 .git 目录，执行：
+七、项目 Git 仓库
+若项目目录无 .git，执行：
 - git init
+当前阶段不要自动提交。
 
-注意：不要在当前阶段自动提交文件；先保证环境与配置正确。
-
-7. 配置 Continue 与 DeepSeek
+八、Continue 与 DeepSeek
 - 在 VS Code 扩展市场安装 Continue 扩展。
-- 打开 https://platform.deepseek.com/ 和 https://platform.deepseek.com/api_keys
-- 扫码登录并创建 API Key。
-- 在 Continue 中添加 Chat model。
-- Provider 选择 DeepSeek。
-- Model 选择 DeepSeek Chat 或 deepseek-chat。
-- 输入 API Key，点击 Connect。
+- 到 https://platform.deepseek.com/api_keys 创建 API Key。
+- Continue 中添加 Chat model，Provider 选 DeepSeek，Model 选 deepseek-chat，填入 Key 并 Connect。
+- 安全要求：API Key 不写入项目文件、README 或任何代码文件，不提交到 GitHub。
 
-安全要求：
-- API Key 不要写入项目文件；
-- 不要提交到 GitHub；
-- 不要放进 README 或任何代码文件中。
-
-8. 重新加载 VS Code
-修改 PATH 后，重新加载 VS Code 窗口，确保新环境变量生效。
-
-四、项目文件保护规则
-不要修改、删除或覆盖项目中的以下文件：
+九、项目文件保护
+不要修改、删除或覆盖：
 - index.html
 - style.css
 - script.js
+如需扩展功能，在不改动核心文件的前提下新增文件。
 
-如果需要扩展功能，建议在不改动这些核心文件的前提下新增新文件，而不是直接覆盖原文件。
-
-五、最终验证
-在配置完成后，逐项执行：
+十、最终验证
+逐项执行：
 - git --version
 - python --version
 - python -m pip --version
@@ -143,83 +74,11 @@
 - git config --global user.email
 - git -C "D:\Microsoft VS Code\student-web" status
 
-六、常见问题排查
-如果命令报错，优先检查：
-- PATH 中是否包含 D:\Git\cmd、D:\Python、D:\Python\Scripts、D:\nodejs
-- 是否需要重开终端或重载 VS Code
-- 是否用的是当前用户级环境变量，而不是系统级变量
-- 是否有重复路径导致命令冲突
-
-可以用以下命令快速排查：
-- where git
-- where python
-- where node
-- where npm
-
-【专项：git 命令无法识别】
-现象：PowerShell 报“git : 无法将“git”项识别为 cmdlet、函数、脚本文件或可运行程序的名称”。
-原因分两种，按顺序排查：
-  1. 最可能：终端会话过期（PATH 已配好，但终端是更新前打开的）。→ 关闭并重开终端，或重载 VS Code 窗口。
-  2. 其次：PATH 里确实没有 D:\Git\cmd。→ 按第 2 步添加。
-定位（用完整路径应能成功，说明 Git 本身没问题）：
-  & "D:\Git\cmd\git.exe" --version
-确认 PATH 是否已含该目录（只读，不改动）：
-  [Environment]::GetEnvironmentVariable("Path","User")
-  where git
-修复：
-  1. 先重开终端；仍不行，再按第 2 步把 D:\Git\cmd 加入“用户变量 Path”；
-  2. 重开后用 where git 确认已指向 D:\Git\cmd\git.exe。
-本机结论：PATH 已正确，重开终端即可，无需再改。
-临时绕过（不改 PATH 时）：
-  在所有 git 命令前用完整路径，例如：
-  & "D:\Git\cmd\git.exe" -C "D:\Microsoft VS Code\student-web" status
-
-七、完成标准
-以下条件都满足时，才可认为配置完成：
-- 所有命令都成功运行；
-- 路径和版本均正确；
+十一、完成标准
+以下都满足即配置完成：
+- 所有命令成功运行，路径与版本正确；
 - Git 身份已配置；
-- Node.js 与 npm 正常可用；
+- Node.js 与 npm 正常；
 - JavaScript 语法检查无报错；
-- DeepSeek 已成功连接；
-- 仅在此时才说明配置完成，并告知实际验证结果。
+- DeepSeek 已连接。
 
-八、执行总结
-从“环境安装 → PATH 配置 → Git 配置 → Node 配置 → DeepSeek 连接 → 最终验证”这个顺序执行最稳妥。
-这能减少因环境变量、解释器位置或权限问题导致的异常，并保证项目能持续开发与维护。
-
-九、访问 GitHub 的网络配置（本地代理）
-
-【现象】
-git push / clone 报错：
-  fatal: unable to access 'https://github.com/...': Recv failure: Connection was reset
-即：Git 直连 GitHub 被重置，属于网络问题（本地提交 commit 不受影响，只有联网操作 push/pull/clone 会失败）。
-
-【方案】
-让 Git 走本地 Clash 代理的“混合端口（Mixed Port）”，本机为 7897。
-
-【开启代理】
-  git config --global http.proxy  http://127.0.0.1:7897
-  git config --global https.proxy http://127.0.0.1:7897
-
-【关闭代理】
-  git config --global --unset http.proxy
-  git config --global --unset https.proxy
-
-【查看当前代理设置】
-  git config --global --get http.proxy
-  git config --global --get https.proxy
-
-【只对 GitHub 走代理（可选，更精细）】
-  git config --global http.https://github.com.proxy http://127.0.0.1:7897
-
-【前提与注意】
-- Clash 必须保持运行；若关闭 Clash，走代理的 git 反而会连接失败。
-- 端口以 Clash 客户端“设置 → 端口”里的 Mixed Port 为准（本机为 7897）。
-- 端口由 Clash 配置写死，正常开机/重启不会变；换配置、换订阅或手动改端口时才会变，
-  此时只需把上面的 7897 换成新端口重新设置一次。
-- 本机实测：配置该代理后，git push 成功（d7fd009..6b02acb  master -> master）。
-
-【验证代理端口是否可用】
-  Test-NetConnection -ComputerName 127.0.0.1 -Port 7897 -InformationLevel Quiet
-  （返回 True 表示端口在监听，即 Clash 正在运行）
