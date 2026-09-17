@@ -55,14 +55,7 @@
 - Continue 中添加 Chat model，Provider 选 DeepSeek，Model 选 deepseek-chat，填入 Key 并 Connect。
 - 安全要求：API Key 不写入项目文件、README 或任何代码文件，不提交到 GitHub。
 
-九、项目文件保护
-不要修改、删除或覆盖：
-- index.html
-- style.css
-- script.js
-如需扩展功能，在不改动核心文件的前提下新增文件。
-
-十、最终验证
+九、最终验证
 逐项执行：
 - git --version
 - python --version
@@ -74,7 +67,7 @@
 - git config --global user.email
 - git -C "D:\Microsoft VS Code\student-web" status
 
-十一、完成标准
+十、完成标准
 以下都满足即配置完成：
 - 所有命令成功运行，路径与版本正确；
 - Git 身份已配置；
